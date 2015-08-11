@@ -21,17 +21,20 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.trustedanalytics.les.gathering.EventCollector;
 import org.trustedanalytics.les.nats.EventProcessor;
 import org.trustedanalytics.les.nats.EventRetriever;
 import org.trustedanalytics.les.nats.NatsEventInfo;
 import org.trustedanalytics.les.storage.EventInfo;
 import org.trustedanalytics.les.storage.EventStore;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import java.util.UUID;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EventsCollectorTests {
@@ -59,6 +62,7 @@ public class EventsCollectorTests {
 
         NatsEventInfo natsEvent = new NatsEventInfo();
         natsEvent.setServiceId("123-abc");
+        natsEvent.setOrganizationId(UUID.randomUUID().toString());
 
         processor.getValue().process("service-creation", natsEvent);
 

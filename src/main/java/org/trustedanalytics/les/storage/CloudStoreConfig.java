@@ -13,27 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.trustedanalytics.les.storage.cloud;
+package org.trustedanalytics.les.storage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.trustedanalytics.les.storage.EventStore;
 
 @Configuration
 @Profile({"cloud", "default"})
 public class CloudStoreConfig {
 
     @Autowired
-    private EventInfoRepository repository;
-
-    @Autowired
     private MongoOperations mongoOperations;
 
     @Bean
     public EventStore eventStore() {
-        return new MongoEventStore(repository, mongoOperations);
+        return new MongoEventStore(mongoOperations);
     }
 }

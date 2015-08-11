@@ -5,14 +5,14 @@ spring.oauth2.resource:
 
 logging:
   level:
-    org.springframework.security: DEBUG
-    com.intel: DEBUG
     nats.client: DEBUG
-
-security:
-  ignored: /open,/*.js,/sdoc.jsp,/api-docs,/api-docs/default/*,/images/*,/lib/*,/css/*
+    org.springframework.security: DEBUG
+    org.trustedanalytics.les: DEBUG
 
 services:
+  api:
+    url: ${vcap.services.sso.credentials.apiEndpoint}
+
   store:
     serverName: ${vcap.services.latest-events-store.credentials.hostname:localhost}
     serverPort: ${vcap.services.latest-events-store.credentials.port:27017}

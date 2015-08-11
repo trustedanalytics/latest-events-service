@@ -22,15 +22,15 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.trustedanalytics.les.storage.EventInfo;
+import org.trustedanalytics.les.storage.MongoEventStore;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Query;
-import org.trustedanalytics.les.storage.EventInfo;
-import org.trustedanalytics.les.storage.cloud.EventInfoRepository;
-import org.trustedanalytics.les.storage.cloud.MongoEventStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,30 +41,27 @@ public class MongoEventStoreTests {
     private MongoEventStore sut;
 
     @Mock
-    private EventInfoRepository repository;
-
-    @Mock
     private MongoOperations mongoOperations;
 
     @Test
     public void callingSaveShouldInsertRecordToRepository() {
-        sut = new MongoEventStore(repository, mongoOperations);
+        sut = new MongoEventStore(mongoOperations);
 
         EventInfo e = new EventInfo();
         sut.save(e);
 
-        verify(repository, times(1)).insert(e);
+        verify(mongoOperations, times(1)).insert(e);
     }
 
     @Test
     public void callingGetEventsCountShouldCallCountOnRepository() {
-        when(repository.count())
+        when(mongoOperations.count(any(Query.class), eq(EventInfo.class)))
                 .thenReturn(123L);
 
-        sut = new MongoEventStore(repository, mongoOperations);
-        long count = sut.getEventsCount();
+        sut = new MongoEventStore(mongoOperations);
+        long count = sut.getEventsCount(new ArrayList<>());
 
-        verify(repository, times(1)).count();
+        verify(mongoOperations, times(1)).count(any(Query.class), eq(EventInfo.class));
         assertEquals(123L, count);
     }
 
@@ -75,8 +72,8 @@ public class MongoEventStoreTests {
         when(mongoOperations.find(any(Query.class), eq(EventInfo.class)))
                 .thenReturn(events);
 
-        sut = new MongoEventStore(repository, mongoOperations);
-        List<EventInfo> actualEvents = sut.getLatestEvents(1, 5);
+        sut = new MongoEventStore(mongoOperations);
+        List<EventInfo> actualEvents = sut.getLatestEvents(new ArrayList<>(), 1, 5);
 
         verify(mongoOperations, times(1)).find(any(Query.class), eq(EventInfo.class));
         assertEquals(events.size(), actualEvents.size());

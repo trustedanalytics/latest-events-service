@@ -20,16 +20,18 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import org.trustedanalytics.cloud.cc.api.CcOperations;
+import org.trustedanalytics.les.MemoryEventStore;
+import org.trustedanalytics.les.nats.EventRetriever;
+import org.trustedanalytics.les.nats.NatsEventRetriever;
+import org.trustedanalytics.les.storage.EventStore;
+
 import nats.client.MessageHandler;
 import nats.client.Nats;
 import org.mockito.ArgumentCaptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.trustedanalytics.les.MemoryEventStore;
-import org.trustedanalytics.les.nats.EventRetriever;
-import org.trustedanalytics.les.nats.NatsEventRetriever;
-import org.trustedanalytics.les.storage.EventStore;
 
 @Configuration
 @Profile("integration-test")
@@ -44,6 +46,9 @@ public class TestConfig {
     public EventStore eventStore() {
         return new MemoryEventStore();
     }
+
+    @Bean
+    public CcOperations ccOperations() { return mock(CcOperations.class); }
 
     @Bean
     public Nats nats() {

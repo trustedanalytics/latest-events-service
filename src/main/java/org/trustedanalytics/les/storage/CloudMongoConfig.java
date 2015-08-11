@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.trustedanalytics.les.storage.cloud;
+package org.trustedanalytics.les.storage;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
@@ -31,7 +31,7 @@ import java.util.List;
 @Configuration
 @EnableMongoRepositories
 @Profile({"cloud", "default"})
-public class MongoConfig extends AbstractMongoConfiguration {
+public class CloudMongoConfig extends AbstractMongoConfiguration {
     @Autowired
     private MongoProperties mongoProps;
 
@@ -46,7 +46,7 @@ public class MongoConfig extends AbstractMongoConfiguration {
         List<MongoCredential> credendialList = new ArrayList<>();
 
         String user = mongoProps.getUser();
-        if (user != null && user.length() > 0) {
+        if (user != null && !user.isEmpty()) {
             credendialList.add(MongoCredential.createMongoCRCredential(user, mongoProps.getDbName(), mongoProps.getPassword().toCharArray()));
         }
 

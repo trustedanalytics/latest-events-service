@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.trustedanalytics.les.nats.config;
+package org.trustedanalytics.les.nats;
 
 import nats.client.Nats;
 import nats.client.spring.NatsBuilder;
@@ -22,8 +22,6 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.trustedanalytics.les.nats.EventRetriever;
-import org.trustedanalytics.les.nats.NatsEventRetriever;
 
 @Configuration
 @Profile({"cloud", "default"})
@@ -33,7 +31,7 @@ public class CloudNatsConfig {
     private String natsUri;
 
     @Bean
-    public Nats nats(ApplicationEventPublisher applicationEventPublisher){
+    public Nats nats(ApplicationEventPublisher applicationEventPublisher) {
         return new NatsBuilder(applicationEventPublisher)
             .addHost(natsUri)
             .connect();

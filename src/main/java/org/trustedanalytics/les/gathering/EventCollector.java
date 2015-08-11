@@ -15,17 +15,19 @@
  */
 package org.trustedanalytics.les.gathering;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.trustedanalytics.les.nats.EventProcessor;
 import org.trustedanalytics.les.nats.EventRetriever;
 import org.trustedanalytics.les.nats.NatsEventInfo;
 import org.trustedanalytics.les.storage.EventInfo;
 import org.trustedanalytics.les.storage.EventStore;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.lang.invoke.MethodHandles;
+import java.util.Date;
 
 @Component
 public class EventCollector {
@@ -53,6 +55,7 @@ public class EventCollector {
                     null,
                     event.getServiceId(),
                     NATS_EVENT_SOURCE_NAME,
+                    event.getOrganizationId(),
                     event.getTimestamp(),
                     category,
                     event.getMessage());

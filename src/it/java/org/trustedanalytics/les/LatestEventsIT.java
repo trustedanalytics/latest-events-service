@@ -22,9 +22,14 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import org.trustedanalytics.cloud.cc.api.CcOperations;
+import org.trustedanalytics.cloud.cc.api.CcOrg;
+import org.trustedanalytics.les.config.TestConfig;
+import org.trustedanalytics.les.rest.EventSummary;
+import org.trustedanalytics.les.rest.EventsController;
+
 import nats.client.Message;
 import nats.client.MessageHandler;
-import nats.client.Nats;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +43,9 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.trustedanalytics.les.config.TestConfig;
-import org.trustedanalytics.les.rest.EventSummary;
-import org.trustedanalytics.les.rest.EventsController;
+import rx.Observable;
+
+import java.util.UUID;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
@@ -54,11 +59,13 @@ public class LatestEventsIT {
     private String BASE_URL;
 
     @Autowired
-    private Nats nats;
+    private CcOperations ccOperations;
 
     @Test
     public void callGetLatestEventsEndpointShouldReturnEventsCollectedFromNats() {
         // Arrange
+        when(ccOperations.getOrgs()).thenReturn(
+                Observable.just(new CcOrg(UUID.fromString("ee1c60ab-1d4f-4bbb-aeba-60ea8c67ba9c"), "SomeOrg")));
         String url = BASE_URL + EventsController.LATEST_EVENTS_URL;
         TestRestTemplate testRestTemplate = new TestRestTemplate();
 
@@ -75,7 +82,7 @@ public class LatestEventsIT {
         Message message = mock(Message.class);
         when(message.getSubject()).thenReturn("platform.subject");
         when(message.getBody())
-                .thenReturn("{\"ServiceId\":\"640A1E39-D5A4-408D-85E5-72A44A383425\",\"ServiceType\":\"\",\"Message\":\"Service spawning failed with error: exit status 1\",\"Timestamp\":\"1438169648514\"}");
+                .thenReturn("{\"ServiceId\":\"640A1E39-D5A4-408D-85E5-72A44A383425\",\"ServiceType\":\"\",\"OrgGuid\":\"ee1c60ab-1d4f-4bbb-aeba-60ea8c67ba9c\",\"Message\":\"Service spawning failed with error: exit status 1\",\"Timestamp\":\"1438169648514\"}");
         msgHandler.onMessage(message);
 
         // Call API again to confirm message was processed and is available through REST service

@@ -23,6 +23,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.trustedanalytics.les.nats.EventProcessor;
+import org.trustedanalytics.les.nats.NatsEventInfo;
+import org.trustedanalytics.les.nats.NatsEventRetriever;
+
 import nats.client.Message;
 import nats.client.MessageHandler;
 import nats.client.Nats;
@@ -31,9 +35,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.trustedanalytics.les.nats.EventProcessor;
-import org.trustedanalytics.les.nats.NatsEventInfo;
-import org.trustedanalytics.les.nats.NatsEventRetriever;
 
 @RunWith(MockitoJUnitRunner.class)
 public class NatsEventRetrieverTests {

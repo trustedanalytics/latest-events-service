@@ -21,7 +21,6 @@ import nats.client.Nats;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
 
 public class NatsEventRetriever implements EventRetriever {
@@ -64,7 +63,7 @@ public class NatsEventRetriever implements EventRetriever {
             if (processor != null) {
                 processor.process(readCategoryFromSubject(msg.getSubject()), eventInfo);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
     }

@@ -20,6 +20,7 @@ import org.trustedanalytics.les.storage.EventInfo;
 import org.trustedanalytics.les.storage.EventStore;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class MemoryEventStore implements EventStore {
@@ -32,7 +33,7 @@ public class MemoryEventStore implements EventStore {
     }
 
     @Override
-    public List<EventInfo> getLatestEvents(int from, int size) {
+    public List<EventInfo> getLatestEvents(Collection<String> orgs, int from, int size) {
         List<EventInfo> result = new ArrayList<>();
         int maxIndexExclusive = from + size;
         if (maxIndexExclusive > list.size()) {
@@ -47,7 +48,7 @@ public class MemoryEventStore implements EventStore {
     }
 
     @Override
-    public long getEventsCount() {
+    public long getEventsCount(Collection<String> orgs) {
         return list.size();
     }
 }

@@ -16,7 +16,10 @@
 package org.trustedanalytics.les.storage;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.IndexDirection;
+import org.springframework.data.mongodb.core.index.Indexed;
 
+import java.util.Date;
 import java.util.Objects;
 
 public class EventInfo {
@@ -24,9 +27,17 @@ public class EventInfo {
     private String id;
 
     private String sourceId;
+
     private String sourceName;
+
+    @Indexed
+    private String organizationId;
+
+    @Indexed(direction = IndexDirection.DESCENDING)
     private long timestamp;
+
     private String category;
+
     private String message;
 
     public EventInfo() {
@@ -36,12 +47,14 @@ public class EventInfo {
             String id,
             String sourceId,
             String sourceName,
+            String organizationId,
             long timestamp,
             String category,
             String message) {
         this.id = id;
         this.sourceId = sourceId;
         this.sourceName = sourceName;
+        this.organizationId = organizationId;
         this.timestamp = timestamp;
         this.category = category;
         this.message = message;
@@ -59,9 +72,13 @@ public class EventInfo {
 
     public void setSourceName(String sourceName) { this.sourceName = sourceName; }
 
-    public long getTimestamp() {
-        return timestamp;
+    public String getOrganizationId() {
+        return organizationId;
     }
+
+    public void setOrganizationId(String organizationId) { this.organizationId = organizationId; }
+
+    public long getTimestamp() { return timestamp; }
 
     public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 
@@ -88,6 +105,7 @@ public class EventInfo {
         return Objects.equals(that.id, this.id)
                 && Objects.equals(that.sourceId, this.sourceId)
                 && Objects.equals(that.sourceName, this.sourceName)
+                && Objects.equals(that.organizationId, this.organizationId)
                 && Objects.equals(that.timestamp, this.timestamp)
                 && Objects.equals(that.category, this.category)
                 && Objects.equals(that.message, this.message);
@@ -95,6 +113,6 @@ public class EventInfo {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, sourceId, sourceName, timestamp, category, message);
+        return Objects.hash(id, sourceId, sourceName, organizationId, timestamp, category, message);
     }
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.trustedanalytics.les.storage.cloud;
+package org.trustedanalytics.les.storage;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

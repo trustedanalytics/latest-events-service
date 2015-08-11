@@ -15,12 +15,13 @@
  */
 package org.trustedanalytics.les.storage;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface EventStore {
     void save(EventInfo eventInfo);
 
-    List<EventInfo> getLatestEvents(int from, int size);
+    List<EventInfo> getLatestEvents(Collection<String> orgs, int from, int size);
 
-    long getEventsCount();
+    long getEventsCount(Collection<String> orgs);
 }

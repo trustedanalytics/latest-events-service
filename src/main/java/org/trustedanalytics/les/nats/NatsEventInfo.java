@@ -25,6 +25,8 @@ public class NatsEventInfo {
 
     private String serviceType;
 
+    private String organizationId;
+
     private String message;
 
     private long timestamp;
@@ -47,6 +49,16 @@ public class NatsEventInfo {
     @JsonProperty("ServiceType")
     public void setServiceType(String serviceType) {
         this.serviceType = serviceType;
+    }
+
+    @JsonProperty("OrgGuid")
+    public String getOrganizationId() {
+        return organizationId;
+    }
+
+    @JsonProperty("OrgGuid")
+    public void setOrganizationId(String organizationId) {
+        this.organizationId = organizationId;
     }
 
     @JsonProperty("Message")

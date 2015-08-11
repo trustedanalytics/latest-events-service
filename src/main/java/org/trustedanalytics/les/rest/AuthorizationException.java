@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.trustedanalytics.les.storage.cloud;
+package org.trustedanalytics.les.rest;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.trustedanalytics.les.storage.EventInfo;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public interface EventInfoRepository extends MongoRepository<EventInfo, String> {
+@ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "No access to given organization")
+public class AuthorizationException extends RuntimeException {
 }
