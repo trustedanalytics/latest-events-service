@@ -1,0 +1,11 @@
+---
+applications:
+- name: latest-events-service
+  memory: 512M
+  instances: 1
+  host: latest-events-service
+  path: target/latest-events-service-${version}.jar
+  services:
+  - latest-events-store
+  - sso
+  - nats-provider

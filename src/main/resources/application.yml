@@ -1,0 +1,23 @@
+spring.oauth2.resource:
+  id: cloud_controller
+  jwt:
+    keyUri: ${vcap.services.sso.credentials.tokenKey}
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.intel: DEBUG
+    nats.client: DEBUG
+
+security:
+  ignored: /open,/*.js,/sdoc.jsp,/api-docs,/api-docs/default/*,/images/*,/lib/*,/css/*
+
+services:
+  store:
+    serverName: ${vcap.services.latest-events-store.credentials.hostname:localhost}
+    serverPort: ${vcap.services.latest-events-store.credentials.port:27017}
+    dbName: ${vcap.services.latest-events-store.credentials.dbname:les}
+    user: ${vcap.services.latest-events-store.credentials.username:}
+    password: ${vcap.services.latest-events-store.credentials.password:}
+
+nats.connection: ${vcap.services.nats-provider.credentials.url:nats://localhost:4222}
