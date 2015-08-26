@@ -18,11 +18,18 @@ package org.trustedanalytics.les.storage;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 import java.util.Objects;
 
+@Document
 public class EventInfo {
+    /**
+     * Time period in seconds after which collection entries should expire.
+     */
+    private final static int EXPIRE_PERIOD_SECONDS = 60 * 60 * 24 * 30;     // 30 days
+
     @Id
     private String id;
 
@@ -40,6 +47,9 @@ public class EventInfo {
 
     private String message;
 
+    @Indexed(expireAfterSeconds = EXPIRE_PERIOD_SECONDS)
+    private Date updateTime;
+
     public EventInfo() {
     }
 
@@ -50,7 +60,8 @@ public class EventInfo {
             String organizationId,
             long timestamp,
             String category,
-            String message) {
+            String message,
+            Date updateTime) {
         this.id = id;
         this.sourceId = sourceId;
         this.sourceName = sourceName;
@@ -58,6 +69,7 @@ public class EventInfo {
         this.timestamp = timestamp;
         this.category = category;
         this.message = message;
+        this.updateTime = updateTime;
     }
 
     public String getId() { return id; }
@@ -89,6 +101,10 @@ public class EventInfo {
     public String getMessage() { return message; }
 
     public void setMessage(String message) { this.message = message; }
+
+    public Date getUpdateTime() { return updateTime; }
+
+    public void setUpdateTime(Date updateTime) { this.updateTime = updateTime; }
 
     @Override
     public boolean equals(Object o) {

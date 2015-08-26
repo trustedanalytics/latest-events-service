@@ -58,7 +58,8 @@ public class EventCollector {
                     event.getOrganizationId(),
                     event.getTimestamp(),
                     category,
-                    event.getMessage());
+                    event.getMessage(),
+                    new Date());
 
             LOG.debug("Processing event: {}: {}", event.getServiceId(), event.getTimestamp());
 
