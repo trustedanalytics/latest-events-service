@@ -23,6 +23,8 @@ public class NatsEventInfo {
 
     private String serviceId;
 
+    private String serviceName;
+
     private String serviceType;
 
     private String organizationId;
@@ -32,52 +34,38 @@ public class NatsEventInfo {
     private long timestamp;
 
     @JsonProperty("ServiceId")
-    public String getServiceId() {
-        return serviceId;
-    }
+    public String getServiceId() { return serviceId; }
 
     @JsonProperty("ServiceId")
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
-    }
+    public void setServiceId(String serviceId) { this.serviceId = serviceId; }
+
+    @JsonProperty("ServiceName")
+    public String getServiceName() { return serviceName; }
+
+    @JsonProperty("ServiceName")
+    public void setServiceName(String serviceName) { this.serviceName = serviceName; }
 
     @JsonProperty("ServiceType")
-    public String getServiceType() {
-        return serviceType;
-    }
+    public String getServiceType() { return serviceType; }
 
     @JsonProperty("ServiceType")
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
-    }
+    public void setServiceType(String serviceType) { this.serviceType = serviceType; }
 
     @JsonProperty("OrgGuid")
-    public String getOrganizationId() {
-        return organizationId;
-    }
+    public String getOrganizationId() { return organizationId; }
 
     @JsonProperty("OrgGuid")
-    public void setOrganizationId(String organizationId) {
-        this.organizationId = organizationId;
-    }
+    public void setOrganizationId(String organizationId) { this.organizationId = organizationId; }
 
     @JsonProperty("Message")
-    public String getMessage() {
-        return message;
-    }
+    public String getMessage() { return message; }
 
     @JsonProperty("Message")
-    public void setMessage(String message) {
-        this.message = message;
-    }
+    public void setMessage(String message) { this.message = message; }
 
     @JsonProperty("Timestamp")
-    public long getTimestamp() {
-        return timestamp;
-    }
+    public long getTimestamp() { return timestamp; }
 
     @JsonProperty("Timestamp")
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
+    public void setTimestamp(long timestamp) { this.timestamp = timestamp; }
 }

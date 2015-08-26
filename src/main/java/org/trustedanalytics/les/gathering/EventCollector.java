@@ -41,8 +41,6 @@ public class EventCollector {
     }
 
     private static class EventProcessorImpl implements EventProcessor {
-        private static final String NATS_EVENT_SOURCE_NAME = "NATS";
-
         private EventStore eventStore;
 
         public EventProcessorImpl(EventStore eventStore) {
@@ -54,7 +52,7 @@ public class EventCollector {
             EventInfo eventInfo = new EventInfo(
                     null,
                     event.getServiceId(),
-                    NATS_EVENT_SOURCE_NAME,
+                    event.getServiceName(),
                     event.getOrganizationId(),
                     event.getTimestamp(),
                     category,

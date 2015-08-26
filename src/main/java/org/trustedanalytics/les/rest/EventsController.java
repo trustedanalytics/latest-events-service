@@ -62,7 +62,7 @@ public class EventsController {
             LOG.debug("Validating whether user belongs to organization: {}", org);
             if (!orgs.contains(org.toString())) {
                 // Deny access to organizations of other users
-                LOG.warn("User does NOT belong to organization: {}", org);
+                LOG.error("User does NOT belong to organization: {}", org);
                 throw new AuthorizationException();
             }
 
