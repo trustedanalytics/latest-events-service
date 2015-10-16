@@ -9,3 +9,5 @@ applications:
   - latest-events-store
   - sso
   - nats-provider
+  env:
+    VERSION: ${version}
