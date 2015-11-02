@@ -36,12 +36,12 @@ The `-V` option prints some extra output information to the console (useful for 
 To run the service locally or in Cloud Foundry, the following environment variables need to be defined:
 * `VCAP_SERVICES_SSO_CREDENTIALS_TOKENKEY` - an UAA endpoint for verifying token signatures;
 * `VCAP_SERVICES_SSO_CREDENTIALS_APIENDPOINT` - a Cloud Foundry API endpoint;
-* `VCAP_SERVICES_LATEST-EVENTS-STORE_CREDENTIALS_HOSTNAME` - a MongoDB server name;
-* `VCAP_SERVICES_LATEST-EVENTS-STORE_CREDENTIALS_PORT` - a MongoDB server port;
-* `VCAP_SERVICES_LATEST-EVENTS-STORE_CREDENTIALS_DBNAME` - a MongoDB database name;
-* `VCAP_SERVICES_LATEST-EVENTS-STORE_CREDENTIALS_USERNAME` - user name used to connect to MongoDB (can be empty);
-* `VCAP_SERVICES_LATEST-EVENTS-STORE_CREDENTIALS_PASSWORD` - password used to connect to MongoDB;
-* `VCAP_SERVICES_NATS-PROVIDER_CREDENTIALS_URL` - a URL for the NATS service;
+* `VCAP_SERVICES_LATEST_EVENTS_STORE_CREDENTIALS_HOSTNAME` - a MongoDB server name;
+* `VCAP_SERVICES_LATEST_EVENTS_STORE_CREDENTIALS_PORT` - a MongoDB server port;
+* `VCAP_SERVICES_LATEST_EVENTS_STORE_CREDENTIALS_DBNAME` - a MongoDB database name;
+* `VCAP_SERVICES_LATEST_EVENTS_STORE_CREDENTIALS_USERNAME` - user name used to connect to MongoDB (can be empty);
+* `VCAP_SERVICES_LATEST_EVENTS_STORE_CREDENTIALS_PASSWORD` - password used to connect to MongoDB;
+* `VCAP_SERVICES_NATS_PROVIDER_CREDENTIALS_URL` - a URL for the NATS service;
 
 ###### Starting service
 
