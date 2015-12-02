@@ -17,7 +17,6 @@ package org.trustedanalytics.les;
 
 import org.trustedanalytics.utils.errorhandling.EnableRestErrorHandling;
 
-import com.mangofactory.swagger.plugin.EnableSwagger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +26,6 @@ import org.springframework.cloud.security.oauth2.resource.EnableOAuth2Resource;
 
 @EnableOAuth2Resource
 @SpringBootApplication
-@EnableSwagger
 @EnableAutoConfiguration(exclude={MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @EnableRestErrorHandling
 public class Application {
