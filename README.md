@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/trustedanalytics/latest-events-service.svg?branch=master)](https://travis-ci.org/trustedanalytics/latest-events-service)
+
 # latest-events-service
 Service gathering events from other platform components
 
