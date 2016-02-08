@@ -15,10 +15,12 @@
  */
 package org.trustedanalytics.les.rest;
 
+import io.swagger.annotations.ApiModel;
 import org.trustedanalytics.les.storage.EventInfo;
 
 import java.util.List;
 
+@ApiModel
 public class EventSummary {
 
     private long total;

@@ -23,11 +23,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoDataAutoConfiguration;
 import org.springframework.cloud.security.oauth2.resource.EnableOAuth2Resource;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableOAuth2Resource
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={MongoAutoConfiguration.class, MongoDataAutoConfiguration.class})
 @EnableRestErrorHandling
+@EnableSwagger2
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

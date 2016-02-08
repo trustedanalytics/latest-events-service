@@ -1,3 +1,6 @@
+security:
+  ignored: /v2/api-docs,/api-docs/default/*
+
 spring.oauth2.resource:
   id: cloud_controller
   jwt:
