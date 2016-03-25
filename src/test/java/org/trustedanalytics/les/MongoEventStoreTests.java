@@ -44,7 +44,7 @@ public class MongoEventStoreTests {
     private MongoOperations mongoOperations;
 
     @Test
-    public void callingSaveShouldInsertRecordToRepository() {
+    public void save_insertsRecordToRepository() {
         sut = new MongoEventStore(mongoOperations);
 
         EventInfo e = new EventInfo();
@@ -54,7 +54,7 @@ public class MongoEventStoreTests {
     }
 
     @Test
-    public void callingGetEventsCountShouldCallCountOnRepository() {
+    public void getEventsCount_callsCountOnRepository() {
         when(mongoOperations.count(any(Query.class), eq(EventInfo.class)))
                 .thenReturn(123L);
 
@@ -66,7 +66,7 @@ public class MongoEventStoreTests {
     }
 
     @Test
-    public void callingGetLatestEventsShouldCallFindOnMongoOperations() {
+    public void getLatestEvents_callsFindOnMongoOperations() {
         List<EventInfo> events = new ArrayList<>();
         events.add(new EventInfo());
         when(mongoOperations.find(any(Query.class), eq(EventInfo.class)))

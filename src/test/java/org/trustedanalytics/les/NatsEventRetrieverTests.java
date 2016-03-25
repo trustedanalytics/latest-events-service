@@ -18,6 +18,7 @@ package org.trustedanalytics.les;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -45,14 +46,32 @@ public class NatsEventRetrieverTests {
     private Nats nats;
 
     @Test
-    public void constructorSubscribesToNats() {
+    public void constructor_subscribesToNats() {
         sut = new NatsEventRetriever(nats);
 
         verify(nats, atLeastOnce()).subscribe(eq("platform.>"), any(MessageHandler.class));
     }
 
     @Test
-    public void assignedProcessorHandlesMessages() {
+    public void setEventProcessor_messagesAreFlowingEvenIfProcessorIsNull() {
+        // Arrange
+        Message message = mock(Message.class);
+        when(message.getSubject()).thenReturn("platform.subject");
+        when(message.getBody())
+                .thenReturn("{\"ServiceId\":\"640A1E39-D5A4-408D-85E5-72A44A383425\",\"ServiceType\":\"\",\"Message\":\"Service spawning failed with error: exit status 1\",\"Timestamp\":\"1438169648514\"}");
+        sut = new NatsEventRetriever(nats);
+        sut.setEventProcessor(null);
+
+        // Verify that subscription happened and capture the message handler
+        ArgumentCaptor<MessageHandler> msgHandler = ArgumentCaptor.forClass(MessageHandler.class);
+        verify(nats, times(1)).subscribe(eq("platform.>"), msgHandler.capture());
+
+        // On captured message handler, simulate message arrival. No error should be thrown.
+        msgHandler.getValue().onMessage(message);
+    }
+
+    @Test
+    public void setEventProcessor_assignedProcessorHandlesMessages() {
         // Arrange
         EventProcessor processor = mock(EventProcessor.class);
         Message message = mock(Message.class);
@@ -71,5 +90,31 @@ public class NatsEventRetrieverTests {
 
         // Verify that message was de-serialized and processed
         verify(processor, times(1)).process(eq("subject"), any(NatsEventInfo.class));
+    }
+
+    @Test
+    public void setEventProcessor_exceptionInProcessorDoesNotBreakMessageFlow() {
+        // Arrange
+        EventProcessor processor = mock(EventProcessor.class);
+        doThrow(new RuntimeException("Some error")).when(processor).process(any(String.class), any(NatsEventInfo.class));
+
+        Message message = mock(Message.class);
+        when(message.getSubject()).thenReturn("platform.subject");
+        when(message.getBody())
+                .thenReturn("{\"ServiceId\":\"640A1E39-D5A4-408D-85E5-72A44A383425\",\"ServiceType\":\"\",\"Message\":\"Service spawning failed with error: exit status 1\",\"Timestamp\":\"1438169648514\"}");
+        sut = new NatsEventRetriever(nats);
+        sut.setEventProcessor(processor);
+
+        // Verify that subscription happened and capture the message handler
+        ArgumentCaptor<MessageHandler> msgHandler = ArgumentCaptor.forClass(MessageHandler.class);
+        verify(nats, times(1)).subscribe(eq("platform.>"), msgHandler.capture());
+
+        // On captured message handler, simulate message arrival
+        msgHandler.getValue().onMessage(message);
+        // Make sure this works twice
+        msgHandler.getValue().onMessage(message);
+
+        // Verify that message was de-serialized and processed
+        verify(processor, times(2)).process(eq("subject"), any(NatsEventInfo.class));
     }
 }

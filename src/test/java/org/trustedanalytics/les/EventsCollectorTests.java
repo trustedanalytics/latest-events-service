@@ -48,14 +48,14 @@ public class EventsCollectorTests {
     private EventStore store;
 
     @Test
-    public void inContructorCollectorRegistersItselfAsEventProcessor() {
+    public void constructor_collectorRegistersItselfAsEventProcessor() {
         sut = new EventCollector(retriever, store);
 
         verify(retriever, times(1)).setEventProcessor(any(EventProcessor.class));
     }
 
     @Test
-    public void whenEventArrivesItIsStored() {
+    public void process_whenEventArrivesItIsStored() {
         sut = new EventCollector(retriever, store);
         ArgumentCaptor<EventProcessor> processor = ArgumentCaptor.forClass(EventProcessor.class);
         verify(retriever, times(1)).setEventProcessor(processor.capture());

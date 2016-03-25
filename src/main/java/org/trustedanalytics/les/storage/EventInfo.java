@@ -28,7 +28,7 @@ public class EventInfo {
     /**
      * Time period in seconds after which collection entries should expire.
      */
-    private final static int EXPIRE_PERIOD_SECONDS = 60 * 60 * 24 * 30;     // 30 days
+    private static final int EXPIRE_PERIOD_SECONDS = 60 * 60 * 24 * 30;     // 30 days
 
     @Id
     private String id;

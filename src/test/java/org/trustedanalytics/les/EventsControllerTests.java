@@ -49,7 +49,7 @@ public class EventsControllerTests {
     private CcOperations ccOperations;
 
     @Test
-    public void callingGetLatestEventsRetrievesDataFromStore() {
+    public void getLatestEvents_retrievesDataFromStore() {
         when(store.getEventsCount(any(Collection.class))).thenReturn(1L);
         when(store.getLatestEvents(any(Collection.class), eq(2), eq(4))).thenReturn(new ArrayList<>());
         when(ccOperations.getOrgs()).thenReturn(Observable.empty());
