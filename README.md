@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/trustedanalytics/latest-events-service.svg?branch=master)](https://travis-ci.org/trustedanalytics/latest-events-service)
+[![Dependency Status](https://www.versioneye.com/user/projects/57236b5cba37ce00464e0544/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57236b5cba37ce00464e0544)
 
 # latest-events-service
 Service gathering events from other platform components
